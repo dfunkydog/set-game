@@ -9,7 +9,7 @@ svg {
   display: none;
 }
 .shape__wrapper {
-  width: calc(100% / 7);
+  width: calc(100% / 5);
   margin: 0 3px;
 }
 .shape {
