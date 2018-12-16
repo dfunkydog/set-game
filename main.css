@@ -1,0 +1,70 @@
+:root {
+  --card-bg: rgb(255, 255, 255);
+  --green: #0fdf2b;
+  --red: #df0f0f;
+  --purple: #3c0fdf;
+  --keyline: #ddd;
+}
+svg {
+  display: none;
+}
+.shape__wrapper {
+  width: calc(100% / 7);
+  margin: 0 3px;
+}
+.shape {
+  display: block;
+  width: 100%;
+  stroke-width: 0.3;
+  fill: transparent;
+}
+
+.green {
+  stroke: var(--green);
+}
+.green.full {
+  fill: var(--green);
+}
+.green.lined {
+  fill: url(img/shapes.svg#hatched-green);
+}
+
+.purple {
+  stroke: var(--purple);
+}
+.purple.full {
+  fill: var(--purple);
+}
+.purple.lined {
+  fill: url(img/shapes.svg#hatched-purple);
+}
+
+.red {
+  stroke: var(--red);
+}
+.red.full {
+  fill: var(--red);
+}
+.red.lined {
+  fill: url(img/shapes.svg#hatched-red);
+}
+
+.game__table {
+  width: 80vw;
+  height: 80vw;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+.game__card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 2px solid var(--keyline);
+}
+.game__card.active {
+  border: 2px solid rgb(10, 235, 160);
+}
