@@ -1,17 +1,30 @@
 let available = 0;
-
+let totalCards = 0;
 let userSet = [];
 let foundSets = [];
+let flashContainer;
+
 document.onreadystatechange = function() {
-  if (document.readyState === "interactive") {
-    while (available < 6) {
-      Game.start();
-      available = Game.sets.length;
+  flashContainer = document.getElementById("js-feedback");
+  document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("reset")) {
+      gameReset();
     }
+  });
+  if (document.readyState === "interactive") {
+    gameStart();
     renderTable();
     renderStatus();
   }
 };
+
+function gameStart() {
+  while (available < 4) {
+    Game.start();
+    available = Game.sets.length;
+    totalCards = Game.table.length;
+  }
+}
 
 /**
  * Render Table
@@ -20,6 +33,7 @@ document.onreadystatechange = function() {
  */
 function renderTable() {
   const board = document.querySelector(".game__table");
+  board.innerHTML = "";
   Game.table.map(card => {
     const newCard = document.createElement("div");
 
@@ -33,6 +47,11 @@ function renderTable() {
   });
 }
 
+/**
+ * Show game status. Sets found from sets available
+ *
+ * @return void
+ */
 function renderStatus() {
   foundEle = document.getElementById("found");
   availableEle = document.getElementById("available");
@@ -40,7 +59,13 @@ function renderStatus() {
   foundEle.textContent = foundSets.length;
 }
 
+/**
+ *
+ * @param {object} card
+ *
+ */
 function handleCardSelect(card) {
+  card.classList.toggle("active");
   if (userSet.length === 3) {
     resetSelections();
   }
@@ -62,7 +87,10 @@ function handleCardSelect(card) {
       flash(Game.whyNot(...userSet), `error`);
     }
   }
-  card.classList.toggle("active");
+
+  if (foundSets.length === available) {
+    gameEnd();
+  }
 }
 /**
  *
@@ -70,24 +98,23 @@ function handleCardSelect(card) {
  * @param {string} type
  */
 function flash(message = "", type = "success") {
-  const ele = document.getElementById("feedback");
-  ele.classList.remove("error", "success", "warn");
-  ele.classList.add(type);
-  ele.textContent = `${message}`;
-  setTimeout(() => {
-    ele.classList.remove("error", "success", "warn");
-    ele.textContent = "";
-  }, 4000);
+  flashContainer.classList.remove("error", "success", "warn");
+  flashContainer.classList.add(type);
+  flashContainer.innerHTML = `<p>${message}</p>`;
+}
+
+function clearFlash() {
+  flashContainer.classList.remove("error", "success", "warn");
+  flashContainer.innerHTML = "";
 }
 
 function resetSelections() {
-  //remove active class
+  clearFlash();
   userSet.forEach(selected => {
     document
       .querySelector(`[data-card-id="${selected.id}"]`)
       .classList.remove("active");
   });
-  //reset array
   userSet = [];
 }
 
@@ -142,4 +169,22 @@ function matchSets(set) {
     });
   }
   return matched;
+}
+
+function gameEnd() {
+  flash(
+    `\u{1F3C6} Congratulations! \u{1F3C6} You've found all the sets. \u{1F947} <span class="reset" >Play again?</span>`,
+    "success"
+  );
+}
+
+function gameReset() {
+  available = 0;
+  totalCards = 0;
+  userSet = [];
+  foundSets = [];
+  clearFlash();
+  renderStatus();
+  gameStart();
+  renderTable();
 }
