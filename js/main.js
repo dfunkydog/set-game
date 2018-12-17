@@ -65,7 +65,6 @@ function renderStatus() {
  *
  */
 function handleCardSelect(card) {
-  card.classList.toggle("active");
   if (userSet.length === 3) {
     resetSelections();
   }
@@ -79,6 +78,7 @@ function handleCardSelect(card) {
       1
     );
   }
+  card.classList.toggle("active");
 
   if (userSet.length === 3) {
     if (Game.isSet(...userSet)) {
@@ -87,7 +87,6 @@ function handleCardSelect(card) {
       flash(Game.whyNot(...userSet), `error`);
     }
   }
-
   if (foundSets.length === available) {
     gameEnd();
   }
