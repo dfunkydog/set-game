@@ -41,7 +41,7 @@ svg {
   fill: var(--green);
 }
 .green.lined {
-  fill: url(img/shapes.svg#hatched-green);
+  fill: url(./img/shapes.svg#hatched-green);
 }
 
 .purple {
@@ -51,7 +51,7 @@ svg {
   fill: var(--purple);
 }
 .purple.lined {
-  fill: url(img/shapes.svg#hatched-purple);
+  fill: url(./img/shapes.svg#hatched-purple);
 }
 
 .red {
@@ -61,7 +61,7 @@ svg {
   fill: var(--red);
 }
 .red.lined {
-  fill: url(img/shapes.svg#hatched-red);
+  fill: url(./img/shapes.svg#hatched-red);
 }
 .game__area {
   position: relative;

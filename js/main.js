@@ -3,8 +3,7 @@ let totalCards = 0;
 let userSet = [];
 let foundSets = [];
 let flashContainer;
-
-document.onreadystatechange = function() {
+const imgPath = (document.onreadystatechange = function() {
   flashContainer = document.getElementById("js-feedback");
   document.addEventListener("click", function(e) {
     if (e.target.classList.contains("reset")) {
@@ -16,7 +15,7 @@ document.onreadystatechange = function() {
     renderTable();
     renderStatus();
   }
-};
+});
 
 function gameStart() {
   while (available < 4) {
@@ -131,7 +130,7 @@ function addSvg(parent, card) {
     newSvg.innerHTML += `<svg viewBox="0 0 8 16" class="shape ${card.color} ${
       card.fill
     }" >
-    <use xlink:href="img/shapes.svg#${card.shape}"></use>
+    <use xlink:href="#${card.shape}"></use>
     </svg>`;
     parent.appendChild(newSvg);
     counter++;
