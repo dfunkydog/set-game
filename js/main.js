@@ -12,17 +12,17 @@ const imgPath = (document.onreadystatechange = function() {
   });
   if (document.readyState === "interactive") {
     gameStart();
-    renderTable();
-    renderStatus();
   }
 });
 
 function gameStart() {
-  while (available < 4) {
+  while (available < 7) {
     Game.start();
     available = Game.sets.length;
     totalCards = Game.table.length;
   }
+  renderTable();
+  renderStatus();
 }
 
 /**
@@ -184,5 +184,4 @@ function gameReset() {
   clearFlash();
   renderStatus();
   gameStart();
-  renderTable();
 }

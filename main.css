@@ -20,9 +20,6 @@ body {
   padding: 0;
 }
 
-svg {
-  display: none;
-}
 .shape__wrapper {
   width: calc(100% / 5);
   margin: 0 3px;
@@ -41,7 +38,7 @@ svg {
   fill: var(--green);
 }
 .green.lined {
-  fill: url(./img/shapes.svg#hatched-green);
+  fill: url(#hatched-green);
 }
 
 .purple {
@@ -51,7 +48,7 @@ svg {
   fill: var(--purple);
 }
 .purple.lined {
-  fill: url(./img/shapes.svg#hatched-purple);
+  fill: url(#hatched-purple);
 }
 
 .red {
@@ -61,7 +58,7 @@ svg {
   fill: var(--red);
 }
 .red.lined {
-  fill: url(./img/shapes.svg#hatched-red);
+  fill: url(#hatched-red);
 }
 .game__area {
   position: relative;
@@ -119,4 +116,25 @@ svg {
   background: var(--keyline);
   color: var(--dark-grey);
   padding: 0.5em;
+}
+
+.reset {
+  padding: 5px;
+  display: inline-block;
+  box-shadow: 0 0 1px hsl(179, 71%, 24%), 1px 1px 2px var(--shadow);
+  background: hsla(0, 100%, 100%, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: block;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(1px);
+  white-space: nowrap;
+  position: absolute;
 }
