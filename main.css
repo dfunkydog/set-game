@@ -12,6 +12,26 @@
 
   --success: hsl(179, 87%, 22%);
   --error: hsl(0, 83%, 72%);
+
+  --radius: 10px;
+  --radius-sm: 5px;
+}
+
+body {
+  font-family: Ubuntu;
+  margin: 0;
+  padding: 0;
+}
+
+.shape__wrapper {
+  width: calc(100% / 5);
+  margin: 0 3px;
+}
+.shape {
+  display: block;
+  width: 100%;
+  stroke-width: 0.3;
+  border-radius: var(--radius);
 }
 
 body {
@@ -60,20 +80,14 @@ body {
 .red.lined {
   fill: url(#hatched-red);
 }
-.game__area {
-  position: relative;
-  width: 80vw;
-  max-width: 600px;
-  margin: 0 auto;
-  padding-top: 60px;
-}
 
 .feedback {
   display: flex;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
+  box-shadow: 0 2px 10px var(--shadow);
 }
 
 .feedback > * {
@@ -89,6 +103,14 @@ body {
   color: var(--off-white);
 }
 
+.game__area {
+  position: relative;
+  width: 90vw;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
 .game__table {
   display: grid;
   grid-gap: 10px;
@@ -99,7 +121,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: var(--radius);
   background: var(--card-bg);
   border: 2px solid var(--keyline);
   height: calc(80vw / 3 - 20px);
@@ -123,7 +145,7 @@ body {
   display: inline-block;
   box-shadow: 0 0 1px hsl(179, 71%, 24%), 1px 1px 2px var(--shadow);
   background: hsla(0, 100%, 100%, 0.1);
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
@@ -137,4 +159,24 @@ body {
   clip-path: inset(1px);
   white-space: nowrap;
   position: absolute;
+}
+.found-sets {
+  display: flex;
+  flex-wrap: wrap;
+}
+.found-set {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--keyline-dark);
+  border-radius: var(--radius-sm);
+  margin-right: 2vw;
+  margin-top: 2vw;
+}
+.found-set__card {
+  display: flex;
+  margin-right: 2px;
+}
+.found-set .shape__wrapper {
+  width: 3.8vw;
+  margin: 0;
 }

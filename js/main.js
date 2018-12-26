@@ -10,7 +10,7 @@ const imgPath = (document.onreadystatechange = function() {
       gameReset();
     }
   });
-  if (document.readyState === "interactive") {
+  if (document.readyState == "interactive") {
     gameStart();
   }
 });
@@ -23,6 +23,49 @@ function gameStart() {
   }
   renderTable();
   renderStatus();
+}
+
+/**
+ * Render Table
+ *
+ * @return void
+ */
+function renderTable() {
+  const board = document.querySelector(".game__table");
+  board.innerHTML = "";
+  Game.table.map(card => {
+    const newCard = document.createElement("div");
+
+    newCard.classList.add("game__card");
+    newCard.dataset.cardId = card.id;
+    addSvg(newCard, card);
+    newCard.addEventListener("click", function(e) {
+      handleCardSelect(e.currentTarget);
+    });
+    board.appendChild(newCard);
+  });
+}
+
+/**
+ * Render Found
+ *
+ * @return void
+ */
+function renderFound() {
+  const foundContainer = document.querySelector(".found-sets");
+  foundContainer.innerHTML = "";
+  foundSets.reverse().map(set => {
+    const newSet = document.createElement("div");
+    newSet.classList.add("found-set");
+    set.map(card => {
+      const newCard = document.createElement("div");
+      newCard.classList.add("found-set__card");
+      newCard.dataset.cardId = card.id;
+      addSvg(newCard, card);
+      newSet.appendChild(newCard);
+    });
+    foundContainer.appendChild(newSet);
+  });
 }
 
 /**
@@ -149,6 +192,7 @@ function alreadyFound(set) {
     flash(`You've found a set!`, `success`);
     foundSets.push(set);
     renderStatus();
+    renderFound();
     return true;
   } else {
     flash(`This set has already been found!`, `error`);
