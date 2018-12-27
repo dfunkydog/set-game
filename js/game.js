@@ -80,14 +80,14 @@ var Game = {
 
   add3: function() {
     var newCards = this.deck.splice(0, 3);
-    console.log(
+    /* console.log(
       "Adding 3: " +
         newCards
           .map(function(c) {
             return c.id;
           })
           .join(" ")
-    );
+    ); */
     this.table = this.table.concat(newCards);
   },
 

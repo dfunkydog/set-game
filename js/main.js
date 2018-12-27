@@ -1,8 +1,11 @@
 let available = 0;
 let totalCards = 0;
+let gameTarget = 6;
+let maxCards = 12;
 let userSet = [];
 let foundSets = [];
 let flashContainer;
+let foundContainer;
 const imgPath = (document.onreadystatechange = function() {
   flashContainer = document.getElementById("js-feedback");
   document.addEventListener("click", function(e) {
@@ -16,7 +19,7 @@ const imgPath = (document.onreadystatechange = function() {
 });
 
 function gameStart() {
-  while (available < 7) {
+  while (available !== gameTarget) {
     Game.start();
     available = Game.sets.length;
     totalCards = Game.table.length;
@@ -51,21 +54,24 @@ function renderTable() {
  *
  * @return void
  */
-function renderFound() {
-  const foundContainer = document.querySelector(".found-sets");
-  foundContainer.innerHTML = "";
-  foundSets.reverse().map(set => {
-    const newSet = document.createElement("div");
-    newSet.classList.add("found-set");
-    set.map(card => {
+function renderFound(set) {
+  foundContainer = document.querySelector(".found-sets");
+  const newSet = document.createElement("div");
+  newSet.classList.add("found-set");
+  set
+    .sort((a, b) => a.count - b.count)
+    .map(card => {
       const newCard = document.createElement("div");
       newCard.classList.add("found-set__card");
       newCard.dataset.cardId = card.id;
       addSvg(newCard, card);
       newSet.appendChild(newCard);
     });
+  if (foundContainer.hasChildNodes()) {
+    foundContainer.insertBefore(newSet, foundContainer.childNodes[0]);
+  } else {
     foundContainer.appendChild(newSet);
-  });
+  }
 }
 
 /**
@@ -129,6 +135,7 @@ function handleCardSelect(card) {
       flash(Game.whyNot(...userSet), `error`);
     }
   }
+
   if (foundSets.length === available) {
     gameEnd();
   }
@@ -151,12 +158,16 @@ function clearFlash() {
 
 function resetSelections() {
   clearFlash();
+  clearSelections();
+  userSet = [];
+}
+
+function clearSelections() {
   userSet.forEach(selected => {
     document
       .querySelector(`[data-card-id="${selected.id}"]`)
       .classList.remove("active");
   });
-  userSet = [];
 }
 
 function getCard(id) {
@@ -192,7 +203,7 @@ function alreadyFound(set) {
     flash(`You've found a set!`, `success`);
     foundSets.push(set);
     renderStatus();
-    renderFound();
+    renderFound(set);
     return true;
   } else {
     flash(`This set has already been found!`, `error`);
@@ -225,6 +236,7 @@ function gameReset() {
   totalCards = 0;
   userSet = [];
   foundSets = [];
+  foundContainer.innerHTML = "";
   clearFlash();
   renderStatus();
   gameStart();
